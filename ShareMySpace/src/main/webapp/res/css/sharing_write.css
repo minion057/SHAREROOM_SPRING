@@ -1,0 +1,104 @@
+/*********************************************************************************/
+/* Two Column                                                                    */
+/*********************************************************************************/
+input {
+    width: 150px;
+    height: auto;
+    line-height: normal;
+    padding: 0.8em 0;
+    border: 1px solid #D4D4D4;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    background: url(../img/bg01.png) repeat;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+textarea {
+    line-height: normal;
+    padding: 0.8em 0;
+    border: 1px solid #D4D4D4;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    background: url(../img/bg01.png) repeat;
+    overflow: auto;
+}
+#board {
+    padding-top: 3em;
+}
+#board .content-title {
+    width: 667px;
+}
+#board .combo {
+    margin-bottom:0px;
+}
+    #board .bt a {
+        padding: 0em 1em 0em 0em;
+        float: right;
+        margin-top: 300px;
+        margin-right:5px;
+    }
+
+ #board .list > li, ul {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #board ul.list li {
+        border-top: 0px solid;
+        font-weight: bold;
+        line-height: 50px;
+    }
+    #board .list > li > ul {
+        clear: both;
+        padding: 0px auto;
+        position: relative;
+        min-width: 40px;
+    }
+
+   #board .list > li > ul > li {
+       float: left;
+       padding: 0.8em 0;
+   }
+    
+    
+    #board .list > li > ul > li:first-child {
+        width: 10%;
+    }
+    /*No 열 크기*/
+    
+    #board .list > li > ul > li:first-child + li {
+        width: 20%;
+    }
+    /*Title 열 크기*/
+    
+    #board .list > li > ul > li:first-child + li + li {
+        width: 12.5%;
+    }
+     /*Type 열 크기*/
+    
+    #board .list > li > ul > li:first-child + li + li + li {
+        width: 20%;
+    }
+    /*Type 열 크기*/
+    
+    #board .list > li > ul > li:first-child + li + li + li + li {
+        width: 12.5%;
+    }
+    /*Location 열 크기*/
+    
+    #board .list > li > ul > li:first-child + li + li + li + li + li {
+        width: 20%;
+    }
+
+
+    

@@ -1,0 +1,108 @@
+﻿/*********************************************************************************/
+/* Two Column                                                                    */
+/*********************************************************************************/
+
+#board {
+    padding-top: 3em;
+}
+
+    #board .icon-file-alt {
+        float: right;
+    }
+
+    #board .icon-search {
+        padding: 0em 1em 0em em;
+    }
+
+    #board .search {
+        width: 300px;
+        height: auto;
+        line-height: normal;
+        padding: .8em .5em;
+        border: 1px solid #D4D4D4;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin-top: 30px;
+    }
+
+    #board .searchicon {
+        float: left;
+        margin-top: 27px;
+    }
+
+
+    #board .list > li:first-child > ul > li {
+        font-weight: bold;
+    }
+
+
+
+    #board .list > li, ul {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+
+        #board .list > li > ul {
+            clear: both;
+            padding: 0px auto;
+            position: relative;
+            min-width: 40px;
+        }
+
+            #board .list > li > ul > li {
+                float: left;
+                padding: 0.8em 0;
+            }
+
+
+                #board .list > li > ul > li:first-child {
+                    width: 9%;
+                }
+                    /*No 열 크기*/
+
+                    #board .list > li > ul > li:first-child + li {
+                        width: 40%;
+                    }
+                        /*Title 열 크기*/
+
+                        #board .list > li > ul > li:first-child + li + li {
+                            width: 10%;
+                        }
+                            /*Type 열 크기*/
+
+                            #board .list > li > ul > li:first-child + li + li + li {
+                                width: 15%;
+                            }
+                                /*Type 열 크기*/
+
+                                #board .list > li > ul > li:first-child + li + li + li + li {
+                                    width: 10%;
+                                }
+                                    /*Location 열 크기*/
+
+                                    #board .list > li > ul > li:first-child + li + li + li + li + li {
+                                        width: 10%;
+                                    }
+                                        /*User 열 크기*/
+
+                                        #board .list > li > ul > li:first-child + li + li + li + li + li + li {
+                                            width: 15%;
+                                        }
+/*Date 열 크기*/
+
+
+#divPaging {
+    clear: both;
+    margin: 0 auto;
+    width: 220px;
+    height: 50px;
+}
+
+    #divPaging > div {
+        float: left;
+        width: 30px;
+        margin: 0 auto;
+        text-align: center;
+    }

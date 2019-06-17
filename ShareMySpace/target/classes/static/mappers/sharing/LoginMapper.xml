@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="kr.ac.inhatc.mvc.mapper.LoginMapper">
+	
+	<!--````````````````````````````````````````````````````````사용자에게 보여주는 주소````````````````````````````````````````````````````````	 -->
+	<select id="selectmember" parameterType="String" resultType="hashmap">
+		select id, password ,email, phone from member
+		where id=#{id}
+	</select> 
+	<!-- 로그인한 회원의 마이페이지 (로그인한 회원의 모든 가입 정보를 넘김)-->
+	
+	
+	
+	
+	
+	
+	
+	<!-- ````````````````````````````````````````````````````````중복검사 GET mapping```````````````````````````````````````````````````````` -->
+	
+	<select id="getidover" parameterType="String" resultType="int">
+		select count(*) from member
+		where id=#{id}
+	</select>
+	<!-- 아이디 중복 검사 (id가 있는 수를 반환) -->
+	
+	<select id="getemailover" parameterType="String" resultType="int">
+		select count(*) from member
+		where email=#{email}
+	</select>
+	<!-- 이메일 중복 검사 (email이 있는 수를 반환) -->
+	
+	<select id="getphoneover" parameterType="String" resultType="int">
+		select count(*) from member
+		where phone=#{phone}
+	</select>
+	<!-- 전화번호 중복 검사(phone이 있는 수를 반환) -->
+	
+	
+	
+
+	<!-- ````````````````````````````````````````````````````````나머지 GET mapping````````````````````````````````````````````````````````-->
+	
+	<delete id="withdrawl" parameterType="String">
+		DELETE FROM member, sharing USING member INNER JOIN sharing, contact USING sharing INNER JOIN contact
+		WHERE member.id= #{id}
+	</delete>
+	<!-- 회원탈퇴를 한 멤버의 정보와 게시판 글을 지움 -->
+	
+	
+	
+
+	<!-- ````````````````````````````````````````````````````````POST mapping-````````````````````````````````````````````````````````-->
+	
+	<select id="logindo"  parameterType="Map" resultType="int">
+		select count(*) from member
+		where id=#{id} And password = #{pw}
+	</select>
+	<!-- 로그인을 위해 아이디와 비밀번호가 일치하는 사람의 수를 카툰터해서 넘긴다 (정상값 1 : 로그인 가능 / 이외의 값(0) :로그인 불가능) -->
+	
+	<insert id="signup" >
+		INSERT INTO member
+		(id, password, email, phone)
+		VALUES
+		(#{id}, #{pw}, #{email}, #{phone})
+	</insert>
+	<!-- 회원가입한 회원의 정보를 저장 -->
+	
+	<update id="updateinfo" parameterType="Map">
+		UPDATE member
+		SET
+			password = #{pw},
+			email = #{email},
+			phone = #{phone}
+		WHERE id = #{id}
+	</update>
+	<!-- 로그인한 회원의 가입 정보를 수정함  -->
+	
+	<select id="findid"  parameterType="Map" resultType="String">
+		select id from member
+		where email = #{email} And phone = #{phone}
+	</select>
+	<!-- 이메일과 전화번호가 일치하는 회원의 아이디를 찾음 -->
+	
+	<select id="findpw"  parameterType="Map" resultType="String">
+		select password from member
+		where id = #{id} And email = #{email} And phone = #{phone}
+	</select>
+	<!-- 아이디, 이메일, 전화번호가 일치하는 회원의 비밀번호를 찾음 -->
+</mapper>

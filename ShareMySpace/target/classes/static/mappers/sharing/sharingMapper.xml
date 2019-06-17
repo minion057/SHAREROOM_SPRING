@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="kr.ac.inhatc.mvc.mapper.SharingMapper">
+	<select id="addressList" parameterType="String" resultType="hashmap">
+		select address from address
+	</select> <!-- 주소 목록 가져오기 -->
+	<select id="roomtypeList" parameterType="String" resultType="hashmap">
+		select type from room
+	</select> <!-- 공간 타입 가져오기 -->
+	<select id="getnewNO" parameterType="String" resultType="String">
+		select max(no) from sharing
+	</select> <!-- 가장 높은 순서를 가진 것이 최신 글 -->
+	
+	<!-- /********************************************home, about us 페이지*************************************************/ -->
+	
+	
+	
+	
+	
+	<!-- /********************************************Sharing 페이지*************************************************/ -->
+	<!--`````````````사용자에게 보여주는 주소````````````	 -->
+	<select id="selectSharingList" parameterType="Map" resultType="hashmap">
+		SELECT
+			no, id, date, type, address, reservation, title
+		FROM sharing
+		WHERE 1=1 And board = 1
+		<choose>
+			<when test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchLocation != null and searchLocation != ''">
+						<if test="searchType != null and searchType != ''">
+							AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND address = #{searchLocation} AND type=#{searchType}
+						</if>
+						AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND address = #{searchLocation}
+					</when>
+		            <when test="searchType != null and searchType != ''">
+							AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND type=#{searchType}
+					</when>
+					<otherwise>AND title LIKE CONCAT('%',#{searchKeyword} ,'%')</otherwise>
+				</choose>
+			</when>
+			<when test="searchLocation != null and searchLocation != ''">
+				<if test="searchType != null and searchType != ''">AND address = #{searchLocation} AND type=#{searchType}</if>
+				AND address = #{searchLocation}
+			</when>
+			<when test="searchType != null and searchType != ''">AND type=#{searchType}</when>
+		</choose>
+	</select> <!-- 검색어에 맞는 공유 게시판 리스트 가져오기 -->
+	
+	<select id="selectSharingcontentOne" 	parameterType="String" resultType="hashmap">
+		SELECT
+			no, member.id, date, editdate ,type, address, title, contents, phone, reservation
+		FROM sharing, member
+		WHERE member.id = sharing.id AND sharing.NO = #{value} And sharing.board = 1
+	</select> <!-- 선택한 글 정보 가져오기 -->
+	
+	
+	<!--`````````````POST````````````	 -->
+	<insert id="registSharingcontent" parameterType="Map">
+		INSERT INTO sharing
+		(id, date, editdate, type, address, reservation, title, contents, board)
+		VALUES
+		(#{id}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{type}, #{address}, #{reservation}, #{title}, #{contents}, 1)
+	</insert> <!-- 공유 게시판에 새로운 글 등록하기 -->
+	
+	<update id="modifySharingcontent" parameterType="Map">
+		UPDATE sharing
+		SET
+			title = #{title},
+			type = #{type},
+			address = #{address},
+			reservation = #{reservation},
+			contents = #{contents},
+			editdate = CURRENT_TIMESTAMP
+		WHERE id = #{id} And no = #{no} And board = 1
+	</update> <!-- 공유 게시판 글 수정하기 -->
+	
+	
+	<!--`````````````GET````````````	 -->
+	<delete id="deleteSharingcontent" parameterType="String">
+		DELETE FROM sharing
+		WHERE no = #{value} And board = 1
+	</delete> <!-- 공유 게시판 글 삭제하기  -->
+	
+	
+	
+	
+	
+	
+	<!-- /********************************************review 공간 후기 게시판*************************************************/ -->
+	<!--`````````````사용자에게 보여주는 주소````````````	 -->
+	<select id="selectReviewList" parameterType="Map" resultType="hashmap">
+		SELECT
+			no, id, date, type, address, reservation, title
+		FROM sharing
+		WHERE 1=1 And board = 2
+		<choose>
+			<when test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchLocation != null and searchLocation != ''">
+						<if test="searchType != null and searchType != ''">
+							AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND address = #{searchLocation} AND type=#{searchType}
+						</if>
+						AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND address = #{searchLocation}
+					</when>
+		            <when test="searchType != null and searchType != ''">
+							AND title LIKE CONCAT('%',#{searchKeyword} ,'%') AND type=#{searchType}
+					</when>
+					<otherwise>AND title LIKE CONCAT('%',#{searchKeyword} ,'%')</otherwise>
+				</choose>
+			</when>
+			<when test="searchLocation != null and searchLocation != ''">
+				<if test="searchType != null and searchType != ''">AND address = #{searchLocation} AND type=#{searchType}</if>
+				AND address = #{searchLocation}
+			</when>
+			<when test="searchType != null and searchType != ''">AND type=#{searchType}</when>
+		</choose>
+	</select> <!-- 검색어에 맞는 후기 게시판 리스트 가져오기 -->
+	
+	<select id="selectReviewcontentOne" 	parameterType="String" resultType="hashmap">
+		SELECT
+			no, member.id, date, editdate ,type, address, title, contents, phone, reservation
+		FROM sharing, member
+		WHERE member.id = sharing.id AND sharing.NO = #{value} And sharing.board = 2
+	</select> <!-- 선택한 글 정보 가져오기 -->
+	
+	
+	<!--`````````````POST````````````	 -->
+	<insert id="registReviewcontent" parameterType="Map">
+		INSERT INTO sharing
+		(id, date, editdate, type, address, reservation, title, contents, board)
+		VALUES
+		(#{id}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{type}, #{address}, #{reservation}, #{title}, #{contents}, 2)
+	</insert> <!-- 후기 게시판에 새로운 글 등록하기 -->
+	
+	<update id="modifyReviewcontent" parameterType="Map">
+		UPDATE sharing
+		SET
+			title = #{title},
+			type = #{type},
+			address = #{address},
+			reservation = #{reservation},
+			contents = #{contents},
+			editdate = CURRENT_TIMESTAMP
+		WHERE id = #{id} And no = #{no} And board = 2
+	</update> <!-- 후기 게시판 글 수정하기 -->
+	
+	
+	<!--`````````````GET````````````	 -->
+	<delete id="deleteReviewcontent" parameterType="String">
+		DELETE FROM sharing
+		WHERE no = #{value} And board = 2
+	</delete> <!-- 후기 게시판 글 삭제하기  -->
+	
+	
+	
+	<!-- /********************************************help 문의 / 신고 게시판*************************************************/ -->
+	<!--`````````````사용자에게 보여주는 주소````````````	 -->
+	<select id="selectContactList" parameterType="Map" resultType="hashmap">
+		SELECT
+			no, id, date, title, status
+		FROM contact
+		WHERE 1=1
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND title LIKE CONCAT('%',#{searchKeyword} ,'%')
+		</if>
+	</select> <!-- 검색어에 맞는 문의 / 신고 게시판 리스트 가져오기 -->
+	
+	<select id="selectContactcontentOne" 	parameterType="String" resultType="hashmap">
+		SELECT
+			no, member.id, date, editdate , title, contents, status, phone
+		FROM contact, member
+		WHERE member.id = contact.id AND contact.NO = #{value}
+	</select> <!-- 선택한 글 정보 가져오기 -->
+	
+	
+	<!--`````````````POST````````````	 -->
+	<insert id="registContactcontent" parameterType="Map">
+		INSERT INTO contact
+		(id, date, editdate, title, contents)
+		VALUES
+		(#{id}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{title}, #{contents})
+	</insert> <!-- 문의 / 신고 게시판에 새로운 글 등록하기 -->
+	
+	<update id="modifyContactcontent" parameterType="Map">
+		UPDATE contact
+		SET
+			title = #{title},
+			contents = #{contents},
+			editdate = CURRENT_TIMESTAMP
+		WHERE id = #{id} And no = #{no}
+	</update> <!-- 문의 / 신고 게시판 글 수정하기 -->
+	
+	<!--`````````````GET````````````	 -->
+	<delete id="deleteContactcontent" parameterType="String">
+		DELETE FROM contact
+		WHERE no = #{value}
+	</delete> <!-- 문의 / 신고 게시판 글 삭제하기  -->
+	<update id="statusContactcontent" parameterType="String">
+		UPDATE contact
+		SET
+			status = 1
+		WHERE no = #{value}
+	</update> <!-- 문의 / 신고 게시판 글 처리완료하기  -->
+	
+	<!-- 기타 -->
+	<select id="getnewNO_contact" parameterType="String" resultType="String">
+		select max(no) from contact
+	</select> <!-- 가장 높은 순서를 가진 것이 최신 글 -->
+</mapper>
