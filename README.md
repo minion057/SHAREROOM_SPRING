@@ -1,11 +1,11 @@
-## SHAREROOM_SPRING
+# SHAREROOM_SPRING
    
 SPRING MVC으로 구현한 공간 공유 사이트입니다.   
 DB는 MYSQL을 사용했으며, url에서 사용자 정보가 공개되지 않게 모두 ajax처리하였습니다.   
 DB 구조, 자세한 실행화면은 ppt를 통해 확인하실 수 있습니다.   
    
      
-# 메인화면   
+### 메인화면   
    
 ![00.메인화면.png](/md_img/00.메인화면.png)     
    
